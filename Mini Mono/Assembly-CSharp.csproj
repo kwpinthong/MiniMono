@@ -86,6 +86,14 @@
     <Compile Include="Assets\Scripts\UI\PlayerConfig.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerInfo.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\Suriyun\Fantasy Customizable Pack\CharacterParts\Scripts\ArmParts.cs" />
+    <Compile Include="Assets\Suriyun\Fantasy Customizable Pack\CharacterParts\Scripts\CharacterParts.cs" />
+    <Compile Include="Assets\Suriyun\Fantasy Customizable Pack\CharacterParts\Scripts\LegParts.cs" />
+    <Compile Include="Assets\Suriyun\Fantasy Customizable Pack\CharacterParts\Scripts\PartsCollections.cs" />
+    <Compile Include="Assets\Suriyun\Fantasy Customizable Pack\CharacterParts\Scripts\PartSelectionController.cs" />
+    <Compile Include="Assets\Suriyun\Fantasy Customizable Pack\CharacterParts\Scripts\SavePrefab.cs" />
+    <Compile Include="Assets\Suriyun\Fantasy Customizable Pack\Scripts\AnimatorController.cs" />
+    <Compile Include="Assets\Suriyun\Fantasy Customizable Pack\Scripts\Camera Scripts\MouseOrbitImproved.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/[KW]/[UNITY]/Mini_Mono/Mini Mono/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

@@ -38,6 +38,10 @@ public class PlayerConfig : MonoBehaviour
     [SerializeField]
     private RawImage imageColor = default;
     [SerializeField]
+    private Image charImage = default;
+    [SerializeField]
+    private List<Image> images = default;
+    [SerializeField]
     private GameObject panel = default;
     [SerializeField]
     private AudioSource clickSound = default;
@@ -71,6 +75,7 @@ public class PlayerConfig : MonoBehaviour
     private void Update()
     {
         imageColor.color = player.GetColor(player.GetIndex());
+        charImage.sprite = images[player.GetIndex()].sprite;
     }
 
 }

@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Chip : MonoBehaviour
 {
+    //[SerializeField]
+    //private Renderer m_renderer = default;
     [SerializeField]
-    private Renderer m_renderer = default;
+    private Animator animator = default;
     private int hp;
     private Color color;
     private const int min = 0;
     private const int max = 9;
 
-    public void SetColor(Color color)
-    {
-        m_renderer.material.color = color;
-    }
+    //public void SetColor(Color color)
+    //{
+    //    m_renderer.material.color = color;
+    //}
 
     public void Set(int _hp, Color _color)
     {
@@ -24,20 +26,29 @@ public class Chip : MonoBehaviour
     
     public void AddHP(int _hp)
     {
-        if(this.hp < max) this.hp += _hp;
+        StartCoroutine(WaitForAnimation(1.0f, 3));
+        if (this.hp < max) this.hp += _hp;
         if(this.hp >= max) this.hp = max;
     }
 
     public void RemoveHP(int _hp)
     {
+        StartCoroutine(WaitForAnimation(0.1f, 5));
         this.hp -= _hp;
         if(this.hp <= min) this.hp = min;
     }
-    
+
     public bool IsDead()
     {
         if(this.hp <= min) return true;
         else return false;
+    }
+
+    private IEnumerator WaitForAnimation(float time, int index)
+    {
+        animator.SetInteger("animation", index);
+        yield return new WaitForSeconds(time);
+        animator.SetInteger("animation", 1);
     }
 
     public void ClearToken(Color color, Board currentRoute)
@@ -59,7 +70,6 @@ public class Chip : MonoBehaviour
     public int GetHP() => this.hp;
     public Color GetColor() => this.color;
     public void Destory() => Destroy(this.gameObject);
-
 
     //**************** Movement ****************//
 

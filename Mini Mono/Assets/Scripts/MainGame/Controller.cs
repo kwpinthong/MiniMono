@@ -12,8 +12,8 @@ public class Controller : MonoBehaviour
     private AudioList audioList = default;
     [SerializeField]
     private Board board = default;
-    [SerializeField]
-    private Chip chipPrefab = default;
+    //[SerializeField]
+    //private Chip chipPrefab = default;
     [SerializeField]
     private GameObject Parent = default;
     [SerializeField]
@@ -140,16 +140,34 @@ public class Controller : MonoBehaviour
                 color = choosePlayers.GetPlayerConfigs()[i].GetRawImage().color;
             }
 
-            for(int j = 1; j < start.Length; j++)
+            int index = 0;
+            for (int j = 1; j < start.Length; j++)
             {
                 if (start[j].name == NameofColor(color))
                 {
+                    
+                    switch (NameofColor(color))
+                    {
+                        case "Blue":
+                            index = 0;
+                            break;
+                        case "Red":
+                            index = 1;
+                            break;
+                        case "Yellow":
+                            index = 2;
+                            break;
+                        case "Green":
+                            index = 3;
+                            break;
+                    }
                     position = start[j].position;
                 }
             }
 
-            Chip chip = Instantiate(chipPrefab, position, Quaternion.identity);
-            chip.SetColor(color);
+            Chip chip = Instantiate(characters[index], position, Quaternion.identity);
+            chip.transform.rotation = new Quaternion(0, 180, 0, 1);
+            //chip.SetColor(color);
             chip.transform.parent = Parent.transform;
 
             if(isPlayer)
