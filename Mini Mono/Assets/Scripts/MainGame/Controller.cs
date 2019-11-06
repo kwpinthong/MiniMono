@@ -18,6 +18,8 @@ public class Controller : MonoBehaviour
     private GameObject Parent = default;
     [SerializeField]
     private GameObject startNode = default;
+    [SerializeField]
+    private List<Chip> characters = default;
 
 
     private int turn;
@@ -140,8 +142,10 @@ public class Controller : MonoBehaviour
 
             for(int j = 1; j < start.Length; j++)
             {
-                if(start[j].name == NameofColor(color))
+                if (start[j].name == NameofColor(color))
+                {
                     position = start[j].position;
+                }
             }
 
             Chip chip = Instantiate(chipPrefab, position, Quaternion.identity);

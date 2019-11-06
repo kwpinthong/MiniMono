@@ -13,6 +13,8 @@ public class PlayerInfo : MonoBehaviour
     private Text poptextHP = default;
     [SerializeField]
     private GameObject turn = default;
+    [SerializeField]
+    private Slider hpBar = default;
 
     public GameObject dead = default;
     public bool showTurn = false;
@@ -22,6 +24,9 @@ public class PlayerInfo : MonoBehaviour
 
     private void Update()
     {
+        hpBar.value = _hp;
+
+
         hp.text = "HP: "+_hp.ToString();
         playername.text = _playername;
         if(showTurn)

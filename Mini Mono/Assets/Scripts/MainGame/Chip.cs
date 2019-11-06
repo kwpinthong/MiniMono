@@ -106,7 +106,7 @@ public class Chip : MonoBehaviour
             position++;
             position %= currentRoute.NodeList().Count;
 
-            Vector3 nextPosition = currentRoute.NodeList()[position].position;
+            Vector3 nextPosition = new Vector3(currentRoute.NodeList()[position].position.x, transform.position.y, currentRoute.NodeList()[position].position.z);
             while(MoveToNext(nextPosition)) 
             { 
                 yield return null; 

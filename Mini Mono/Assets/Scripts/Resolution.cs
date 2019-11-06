@@ -10,7 +10,7 @@ public class Resolution : MonoBehaviour
     private void Update()
     {
         if (change)
-            Camera.main.orthographicSize = 7 * Screen.height/ Screen.width * 0.5f;
+            Camera.main.orthographicSize = 7.5f * Screen.height/ Screen.width * 0.5f;
         if (Camera.main.orthographicSize < min) Camera.main.orthographicSize = min;
     }
 }

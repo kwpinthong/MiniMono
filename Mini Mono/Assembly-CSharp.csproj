@@ -85,7 +85,7 @@
     <Compile Include="Assets\Scripts\UI\Music.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerConfig.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerInfo.cs" />
-    <Compile Include="Assets\Scripts\UI\UI.cs" />
+    <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/[KW]/[UNITY]/Mini_Mono/Mini Mono/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
