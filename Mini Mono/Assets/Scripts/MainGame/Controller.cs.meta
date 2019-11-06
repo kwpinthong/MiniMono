@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ac1ac8aa0c117b242ab3370b9f6691cc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - chipPrefab: {fileID: 3407230310484239144, guid: 429a8fddb82101a42878b08d92912377,
+      type: 3}
+  - ChoosePlayers: {instanceID: 0}
+  - ChooseColors: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
