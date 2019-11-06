@@ -26,7 +26,7 @@ public class Chip : MonoBehaviour
     
     public void AddHP(int _hp)
     {
-        StartCoroutine(WaitForAnimation(1.0f, 3));
+        StartCoroutine(WaitForAnimation(0.5f, 3));
         if (this.hp < max) this.hp += _hp;
         if(this.hp >= max) this.hp = max;
     }

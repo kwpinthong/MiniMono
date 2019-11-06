@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerInfo : MonoBehaviour
 {
-    //[SerializeField]
-    //private Text hp = default;
+    [SerializeField]
+    private Text hpText = default;
     [SerializeField]
     private Slider hpBar = default;
     [SerializeField]
@@ -26,6 +26,7 @@ public class PlayerInfo : MonoBehaviour
     private void Update()
     {
         hpBar.value = _hp;
+        hpText.text = _hp.ToString();
         playername.text = _playername;
         if(showTurn)
             turn.SetActive(true);
