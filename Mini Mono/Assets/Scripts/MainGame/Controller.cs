@@ -15,6 +15,10 @@ public class Controller : MonoBehaviour
     //[SerializeField]
     //private Chip chipPrefab = default;
     [SerializeField]
+    private GameObject choosePlayersPanel = default;
+    [SerializeField]
+    private GameObject chooseColorsPanel = default;
+    [SerializeField]
     private GameObject Parent = default;
     [SerializeField]
     private GameObject startNode = default;
@@ -32,10 +36,12 @@ public class Controller : MonoBehaviour
     private int max;
     private int roll;
     private bool endgame;
+    private bool onTesting;
     private bool doneSetting;
     private bool coroutineAllowed;
     private Transform[] start;
-    private Color[] colors = {
+    private readonly Color[] colors = 
+    {
         Color.blue,
         Color.red,
         Color.yellow,
@@ -54,6 +60,8 @@ public class Controller : MonoBehaviour
         doneSetting = false;
         coroutineAllowed = false;
 
+        onTesting = false;
+
         colorsCheck = new List<Color>();
         players = new List<Character>();
         start = startNode.GetComponentsInChildren<Transform>();
@@ -61,91 +69,40 @@ public class Controller : MonoBehaviour
 
     private void Update()
     {
-        if(Parent.transform.childCount == 1) 
+        if (Parent.transform.childCount == 1)
         {   //ENG THE GMAE!
             endgame = true;
             StopAllCoroutines();
         }
+
+        if(Input.GetKey(KeyCode.LeftControl) && !onTesting)
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                onTesting = true;
+                AllBotsTesting();
+            }
     }
 
-    public void UI_RollDice()
-    {  
-        if(coroutineAllowed)
-            StartCoroutine(StartTurn());  
-    }
+    public void UI_RollDice() { if(coroutineAllowed) StartCoroutine(StartTurn()); } 
     public void UI_EnterGame() => EnterGame();
 
-    private void EnterGame()
+    private void AllBotsTesting()
     {
         Delete();
         players.Clear();
         colorsCheck.Clear();
-        number = choosePlayers.GetNumber();
-        for (int i = 0; i < number; i++)
+        for (int i = 0; i < 4; i++)
         {
-            colorsCheck.Add(choosePlayers.GetPlayerConfigs()[i].GetRawImage().color);
-        }
-
-        for(int j = 0; j < number; j++)
-        {
-            if(HaveSameColor(colorsCheck[j]))
-            {
-                return;
-            }
-            else if ( j == (number - 1) )
-            {
-                if( (max - number) == 0)
-                {
-                    CreatePlayer(true, number);
-                }
-                else
-                {
-                    CreatePlayer(true, number);         
-                    CreatePlayer(false, (max-number));  
-                } 
-                
-                doneSetting = true;
-                mainPanel.SetMainUI();
-            }
-        }
-        mainPanel.ShowTurn(turn, true);
-        coroutineAllowed = true;
-    }
-
-    private void CreatePlayer(bool isPlayer, int limt)
-    {
-        for(int i = 0; i < limt; i++)
-        {
-            string tname;
-            Color color = Color.grey;
+            string tname = "Bot " + (i + 1).ToString();
             Vector3 position = new Vector3(0, 0, 0);
-            
-            if (isPlayer)
-                tname = "Player " + (i+1).ToString();
-            else
-                tname = "Bot " + (i+1).ToString();
-
-            if (!isPlayer)
-            {
-                for(int j = 0; j < colors.Length; j++)
-                    if(!colorsCheck.Contains(colors[j]))
-                    {
-                        color = colors[j];
-                        colorsCheck.Add(colors[j]);
-                        break;
-                    }
-            }
-            else 
-            {
-                color = choosePlayers.GetPlayerConfigs()[i].GetRawImage().color;
-            }
+            Color color = colors[i];
 
             int index = 0;
             for (int j = 1; j < start.Length; j++)
             {
                 if (start[j].name == NameofColor(color))
                 {
-                    
+
                     switch (NameofColor(color))
                     {
                         case "Blue":
@@ -166,24 +123,125 @@ public class Controller : MonoBehaviour
             }
 
             Chip chip = Instantiate(characters[index], position, Quaternion.identity);
-            chip.transform.rotation = new Quaternion(0, 180, 0, 1);
-            //chip.SetColor(color);
+            chip.transform.rotation = new Quaternion(0, 180, 0, 0);
             chip.transform.parent = Parent.transform;
-
-            if(isPlayer)
-                chip.name = "Player_Chip " + (i+1).ToString();
-            else
-                chip.name = "Bot_Chip " + (i+1).ToString();
-
             chip.Set(9, color);
             chip.Initialzation(board);
+            players.Add(new Bot(tname, color, chip));
+        }
+        choosePlayersPanel.SetActive(false);
+        chooseColorsPanel.SetActive(false);
+        doneSetting = true;
+        mainPanel.SetMainUI();
+        mainPanel.ShowTurn(turn, true);
+        coroutineAllowed = true;
+        if (players[turn].IsBot()) StartCoroutine(StartTurn());
+    }
+
+    private void EnterGame()
+    {
+        Delete();
+        players.Clear();
+        colorsCheck.Clear();
+        number = choosePlayers.GetNumber();
+
+        for (int i = 0; i < number; i++)
+        {
+            colorsCheck.Add(choosePlayers.GetPlayerConfigs()[i].GetRawImage().color);
+        }
+
+        for(int j = 0; j < number; j++)
+        {
+            if(HaveSameColor(colorsCheck[j]))
+            {
+                return;
+            }
+            else if ( j == (number - 1) )
+            {
+                if( (max - number) == 0)
+                {
+                    CreatePlayer(true, number);
+                }
+                else
+                {
+                    CreatePlayer(true, number);         //Create Players, then
+                    CreatePlayer(false, (max-number));  //create bots.
+                } 
+                doneSetting = true;
+                mainPanel.SetMainUI();
+            }
+        }
+        mainPanel.ShowTurn(turn, true);
+        onTesting = true; //preventing
+        coroutineAllowed = true;
+    }
+
+    private void CreatePlayer(bool isPlayer, int limt)
+    {
+        for(int i = 0; i < limt; i++)
+        {
+            string tname;
+            Color color = Color.grey;
+            Vector3 position = new Vector3(0, 0, 0);
 
             if (isPlayer)
             {
-                players.Add(new Player(tname, color, chip)); 
+                tname = "Player " + (i + 1).ToString();
+                color = choosePlayers.GetPlayerConfigs()[i].GetRawImage().color; 
             }
             else
             {
+                tname = "Bot " + (i + 1).ToString();
+                for (int j = 0; j < colors.Length; j++)
+                    if (!colorsCheck.Contains(colors[j]))
+                    {
+                        color = colors[j];
+                        colorsCheck.Add(colors[j]);
+                        break;
+                    }
+            }
+
+            int index = 0;
+            for (int j = 1; j < start.Length; j++)
+            {
+                if (start[j].name == NameofColor(color))
+                {
+
+                    switch (NameofColor(color))
+                    {
+                        case "Blue":
+                            index = 0;
+                            break;
+                        case "Red":
+                            index = 1;
+                            break;
+                        case "Yellow":
+                            index = 2;
+                            break;
+                        case "Green":
+                            index = 3;
+                            break;
+                    }
+                    position = start[j].position;
+                }
+            }
+
+            Chip chip = Instantiate(characters[index], position, Quaternion.identity);
+            chip.transform.rotation = new Quaternion(0, 180, 0, 1); // For old Chip ==> chip.SetColor(color);
+            chip.transform.parent = Parent.transform;
+
+            if (isPlayer)
+            {
+                chip.name = "Player_Chip " + (i + 1).ToString();
+                chip.Set(9, color);
+                chip.Initialzation(board);
+                players.Add(new Player(tname, color, chip));
+            }
+            else
+            {
+                chip.name = "Bot_Chip " + (i + 1).ToString();
+                chip.Set(9, color);
+                chip.Initialzation(board);
                 players.Add(new Bot(tname, color, chip));
             }
         }
@@ -211,7 +269,6 @@ public class Controller : MonoBehaviour
     private IEnumerator StartTurn()
     {
         coroutineAllowed = false;
-
         //this player doesn't have a Dead Flag
         if(!players[turn].IsDead())
         {
@@ -273,7 +330,7 @@ public class Controller : MonoBehaviour
                         else
                         {
                             int index = 0;
-                            for(int i=0; i < node.ListColors().Count; i++)
+                            for (int i=0; i < node.ListColors().Count; i++)
                             {
                                 if(!node.ListColors()[i].Equals(Color.grey))
                                 {
@@ -285,7 +342,8 @@ public class Controller : MonoBehaviour
                                     }
                                 }
                             }
-                            mainPanel.POPHP(turn, "-" + (index+1).ToString());
+                            mainPanel.Damage(turn);
+                            //mainPanel.POPHP(turn, "-" + (index+1).ToString());
                             node.RemoveToken(index);
                             if(node.IsEmpty())
                             {
@@ -308,7 +366,6 @@ public class Controller : MonoBehaviour
 
             }
         }
-    
         yield return new WaitUntil(() => isChecking == false);
         mainPanel.ShowTurn(turn, false);
         Check(turn); //Sending to not-Dead Player

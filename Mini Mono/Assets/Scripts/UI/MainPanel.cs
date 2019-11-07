@@ -36,6 +36,13 @@ public class MainPanel : MonoBehaviour
         StartCoroutine(PlayBG());
     }
 
+    public void Damage(int index)
+    {
+        playerInfos[index].DamageBlink();
+        //StartCoroutine(playerInfos[index].DamageBlink_2());
+        //StartCoroutine(playerInfos[index].DamageBlink_3());
+    }
+
     public void DeadPanel(int index)
     {
         playerInfos[index].dead.SetActive(true);
@@ -60,8 +67,6 @@ public class MainPanel : MonoBehaviour
     private void Update()
     {
         for (int i = 0; i < controller.ListPlayer().Count; i++)
-        {
             playerInfos[i].Set(controller.ListPlayer()[i].GetChip().GetHP(), controller.ListPlayer()[i].GetName());
-        }
     }
 }

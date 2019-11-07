@@ -49,6 +49,7 @@ public class Chip : MonoBehaviour
         animator.SetInteger("animation", index);
         yield return new WaitForSeconds(time);
         animator.SetInteger("animation", 1);
+        transform.rotation = new Quaternion(0, 180, 0, 0);
     }
 
     public void ClearToken(Color color, Board currentRoute)
@@ -126,7 +127,6 @@ public class Chip : MonoBehaviour
             yield return new WaitForSeconds(0.15f);
             steps--;
         }
-
         isMoving = false;
     }
 
