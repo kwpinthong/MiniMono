@@ -5,25 +5,31 @@ using UnityEngine.UI;
 
 public class PlayerConfig : MonoBehaviour
 {
-    //class configMenu
-    //{
-    //    int index = 0;
-        
-    //    //public Color GetColor(int index) => colors[index];
+    class configMenu
+    {
+        int index = 0;
+        Color[] colors = {
+            Color.blue,     
+            Color.red,              
+            Color.yellow,   
+            Color.green
+        };
 
+        public Color GetColor(int index) => colors[index];
+        public int GetIndex() => this.index;
 
-    //    public void Next()
-    //    {
-    //        if(index >= 3) index = 0;
-    //        else index++;
-    //    }
+        public void Next()
+        {
+            if(index >= 3) index = 0;
+            else index++;
+        }
 
-    //    public void Previouse()
-    //    {
-    //        if(index <= 0) index = 3;
-    //        else index--;
-    //    }
-    //}
+        public void Previouse()
+        {
+            if(index <= 0) index = 3;
+            else index--;
+        }
+    }
 
     [SerializeField]
     private Button nextButton = default;
@@ -39,18 +45,7 @@ public class PlayerConfig : MonoBehaviour
     private GameObject panel = default;
     [SerializeField]
     private AudioSource clickSound = default;
-    
-    private int index;
-    //private configMenu player = new configMenu();
-
-
-    private Color[] colors = 
-    {
-        Color.blue,
-        Color.red,
-        Color.yellow,
-        Color.green
-    };
+    private configMenu player = new configMenu();
 
     public void ClosePanel(bool Y)
     {
@@ -60,32 +55,27 @@ public class PlayerConfig : MonoBehaviour
     private void Next()
     { 
         clickSound.Play();
-        if (index >= 3) index = 0;
-        else index++;
+        player.Next(); 
     }
     
     private void Previouse()
     { 
         clickSound.Play();
-        if (index <= 0) index = 3;
-        else index--;
+        player.Previouse(); 
     }
 
+    public RawImage GetRawImage() => imageColor;
 
     private void Awake()
     {
-        index = 0;
         nextButton.onClick.AddListener(Next);
         previouseButton.onClick.AddListener(Previouse);
     }
 
     private void Update()
     {
-        imageColor.color = colors[index];
-        charImage.sprite = images[index].sprite;
+        imageColor.color = player.GetColor(player.GetIndex());
+        charImage.sprite = images[player.GetIndex()].sprite;
     }
-
-    public RawImage GetRawImage() => imageColor;
-    //public int GetIndex() => this.index;
 
 }
