@@ -16,6 +16,8 @@ public class PlayerInfo : MonoBehaviour
     [SerializeField]
     private Image damagePanel = default;
     [SerializeField]
+    private float targetPositionY = default;
+    [SerializeField]
     private GameObject turn = default;
     public GameObject dead = default;
     public bool showTurn = false;
@@ -23,6 +25,7 @@ public class PlayerInfo : MonoBehaviour
     private int _hp;
     private string _playername;
     private Sequence sequence_damageblink;
+    private Sequence sequencePOP;
  
     private void Update()
     {
@@ -56,10 +59,18 @@ public class PlayerInfo : MonoBehaviour
 
     public IEnumerator POP(string textpop)
     {
+        Vector2 originPosition = poptextHP.rectTransform.localPosition;
+        sequencePOP?.Kill();
+        sequencePOP = DOTween.Sequence();
+        sequencePOP.Append(poptextHP.rectTransform.DOLocalMoveY(targetPositionY, 0.6f).SetEase(Ease.OutExpo));
         poptextHP.text = textpop;
         poptextHP.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.4f);
+        sequencePOP.SetAutoKill(true);
+        sequencePOP.Play(); 
+        yield return new WaitForSeconds(0.6f);
         poptextHP.gameObject.SetActive(false);
+        poptextHP.rectTransform.localPosition = originPosition;
+
     }
 
 }

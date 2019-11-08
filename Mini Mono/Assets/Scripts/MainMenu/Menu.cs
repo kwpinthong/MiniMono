@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 
 namespace MenuManager
 {
@@ -10,14 +12,18 @@ namespace MenuManager
         private AudioSource clickSound = default;
         [SerializeField]
         private AudioSource clickSoundEnter = default;
-
+        [SerializeField]
+        private GameObject text = default;
         [SerializeField]
         private Credit credit = default;
         [SerializeField]
         private StartGame icon = default;
 
+        private bool isPlaying;
+
         private void Awake()
         {
+            isPlaying = false;
             icon.Initialzation(clickSoundEnter);
             credit.Initialzation(clickSound);
             // Delegate
@@ -29,6 +35,22 @@ namespace MenuManager
         private void Start()
         {
             MenuBG.Play();
+        }
+
+        private void Update()
+        {
+            if (!isPlaying)
+                StartCoroutine(Blink(1.0f));
+        }
+
+        private IEnumerator Blink(float time)
+        {
+            isPlaying = true;
+            text.SetActive(false);
+            yield return new WaitForSecondsRealtime(time);
+            text.SetActive(true);
+            yield return new WaitForSecondsRealtime(time);
+            isPlaying = false;
         }
 
         private void IconStart(){ }

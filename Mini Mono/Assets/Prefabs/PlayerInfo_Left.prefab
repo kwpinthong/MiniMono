@@ -183,7 +183,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 347.53, y: -0.000012159}
+  m_AnchoredPosition: {x: 171.86, y: 0.13501}
   m_SizeDelta: {x: 90.61, y: 68.27}
   m_Pivot: {x: 0.5, y: 0.5000001}
 --- !u!222 &3878821327770395000
@@ -396,7 +396,7 @@ MonoBehaviour:
   playername: {fileID: 3451446144486461926}
   poptextHP: {fileID: 7735864760434194052}
   damagePanel: {fileID: 4193846201354582810}
-  animator: {fileID: 0}
+  targetPositionY: 0
   turn: {fileID: 32214425488957189}
   dead: {fileID: 7081094522511352173}
   showTurn: 0

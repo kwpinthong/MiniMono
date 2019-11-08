@@ -56,7 +56,7 @@ public class Controller : MonoBehaviour
         isChecking = false;
         doneSetting = false;
         coroutineAllowed = false;
-
+        
         onTesting = false;
 
         colorsCheck = new List<Color>();
