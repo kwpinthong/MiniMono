@@ -88,7 +88,6 @@ GameObject:
   - component: {fileID: 7866373136856161129}
   - component: {fileID: 3886834601328779058}
   - component: {fileID: 4193846201354582810}
-  - component: {fileID: 3791730987939435321}
   m_Layer: 5
   m_Name: Damage
   m_TagString: Untagged
@@ -136,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -150,25 +149,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!95 &3791730987939435321
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 410835649848933779}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 173b38e44c413c9488dc35576b0bd807, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1173386289170604811
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,7 +396,7 @@ MonoBehaviour:
   playername: {fileID: 3451446144486461926}
   poptextHP: {fileID: 7735864760434194052}
   damagePanel: {fileID: 4193846201354582810}
-  animator: {fileID: 3791730987939435321}
+  animator: {fileID: 0}
   turn: {fileID: 32214425488957189}
   dead: {fileID: 7081094522511352173}
   showTurn: 0

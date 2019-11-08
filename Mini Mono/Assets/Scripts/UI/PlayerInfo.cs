@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,15 +16,14 @@ public class PlayerInfo : MonoBehaviour
     [SerializeField]
     private Image damagePanel = default;
     [SerializeField]
-    private Animator animator = default;
-    [SerializeField]
     private GameObject turn = default;
-
     public GameObject dead = default;
     public bool showTurn = false;
+
     private int _hp;
     private string _playername;
-
+    private Sequence sequence_damageblink;
+ 
     private void Update()
     {
         hpBar.value = _hp;
@@ -32,8 +31,7 @@ public class PlayerInfo : MonoBehaviour
         playername.text = _playername;
         if (showTurn)
             turn.SetActive(true);
-        else
-            turn.SetActive(false);
+        else turn.SetActive(false);
     }
 
     public void Set(int h, string n)
@@ -44,49 +42,18 @@ public class PlayerInfo : MonoBehaviour
 
     public void DamageBlink()
     {
-        animator.SetTrigger("setDamage");
-    }
+        sequence_damageblink?.Kill();
+        sequence_damageblink = DOTween.Sequence();
 
-    public IEnumerator DamageBlink_2()
-    {
-        Color originColor = damagePanel.color;
-        Color targetColor = new Color(1f, 0f, 0f, 0.5f);
-
-        damagePanel.color = targetColor;
-        yield return new WaitForSeconds(0.1f);
-        damagePanel.color = originColor;
-        yield return new WaitForSeconds(0.1f);
-        damagePanel.color = targetColor;
-        yield return new WaitForSeconds(0.1f);
-        damagePanel.color = originColor;
-        yield return new WaitForSeconds(0.1f);
-        damagePanel.color = targetColor;
-        yield return new WaitForSeconds(0.1f);
-        damagePanel.color = originColor;
-    }
-
-    private bool changeColor = false;
-    public IEnumerator DamageBlink_3()
-    {
-        //Color originColor = damagePanel.color;
-        //Color targetColor = new Color(1f, 0f, 0f, 0.5f);
-
-        //damagePanel.color = Color.Lerp(damagePanel.color, targetColor, 5.0f);
-        //yield return new WaitForSeconds(0.2f);
-        //damagePanel.color = Color.Lerp(damagePanel.color, originColor, 5.0f);
-
-        changeColor = true;
-        float duration = 2f;
-        float counter = 0f;
-        while(counter < duration)
+        for (int i = 0; i < 2; i++)
         {
-            counter += Time.deltaTime;
-            yield return null;
+            sequence_damageblink.Append(damagePanel.DOFade(1.0f, 0.1f).SetEase(Ease.Flash));
+            sequence_damageblink.Append(damagePanel.DOFade(0.0f, 0.1f).SetEase(Ease.Flash));
         }
-        Debug.Log("Done");
-        changeColor = false;
+        sequence_damageblink.SetAutoKill(true);
+        sequence_damageblink.Play();
     }
-    
+
     public IEnumerator POP(string textpop)
     {
         poptextHP.text = textpop;
@@ -94,4 +61,5 @@ public class PlayerInfo : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         poptextHP.gameObject.SetActive(false);
     }
+
 }

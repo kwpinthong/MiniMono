@@ -4,19 +4,12 @@ using UnityEngine;
 
 public class Chip : MonoBehaviour
 {
-    //[SerializeField]
-    //private Renderer m_renderer = default;
     [SerializeField]
     private Animator animator = default;
     private int hp;
     private Color color;
     private const int min = 0;
     private const int max = 9;
-
-    //public void SetColor(Color color)
-    //{
-    //    m_renderer.material.color = color;
-    //}
 
     public void Set(int _hp, Color _color)
     {
@@ -130,11 +123,7 @@ public class Chip : MonoBehaviour
         isMoving = false;
     }
 
-    private bool MoveToNext(Vector3 goal)
-    {
-        return goal != (transform.position = Vector3.MoveTowards(transform.position, goal, 10f * Time.deltaTime));
-    }
-
+    private bool MoveToNext(Vector3 goal) => goal != (transform.position = Vector3.MoveTowards(transform.position, goal, 10f * Time.deltaTime));
     public int GetCurrentPosition() => position;
     public bool IsMoving() => isMoving;
 }

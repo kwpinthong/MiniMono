@@ -12,8 +12,6 @@ public class Controller : MonoBehaviour
     private AudioList audioList = default;
     [SerializeField]
     private Board board = default;
-    //[SerializeField]
-    //private Chip chipPrefab = default;
     [SerializeField]
     private GameObject choosePlayersPanel = default;
     [SerializeField]
@@ -21,10 +19,9 @@ public class Controller : MonoBehaviour
     [SerializeField]
     private GameObject Parent = default;
     [SerializeField]
-    private GameObject startNode = default;
-    [SerializeField]
     private List<Chip> characters = default;
-
+    [SerializeField]
+    private Transform[] start = default;
 
     private int turn;
     private int number;
@@ -39,7 +36,7 @@ public class Controller : MonoBehaviour
     private bool onTesting;
     private bool doneSetting;
     private bool coroutineAllowed;
-    private Transform[] start;
+
     private readonly Color[] colors = 
     {
         Color.blue,
@@ -64,7 +61,6 @@ public class Controller : MonoBehaviour
 
         colorsCheck = new List<Color>();
         players = new List<Character>();
-        start = startNode.GetComponentsInChildren<Transform>();
     }
 
     private void Update()
@@ -75,17 +71,20 @@ public class Controller : MonoBehaviour
             StopAllCoroutines();
         }
 
-        if(Input.GetKey(KeyCode.LeftControl) && !onTesting)
+        #if UNITY_EDITOR
+        if (Input.GetKey(KeyCode.LeftControl) && !onTesting)
             if (Input.GetKeyDown(KeyCode.A))
             {
                 onTesting = true;
                 AllBotsTesting();
             }
+        #endif
     }
 
     public void UI_RollDice() { if(coroutineAllowed) StartCoroutine(StartTurn()); } 
     public void UI_EnterGame() => EnterGame();
 
+    #if UNITY_EDITOR
     private void AllBotsTesting()
     {
         Delete();
@@ -98,11 +97,10 @@ public class Controller : MonoBehaviour
             Color color = colors[i];
 
             int index = 0;
-            for (int j = 1; j < start.Length; j++)
+            for (int j = 0; j < start.Length; j++)
             {
                 if (start[j].name == NameofColor(color))
                 {
-
                     switch (NameofColor(color))
                     {
                         case "Blue":
@@ -121,7 +119,6 @@ public class Controller : MonoBehaviour
                     position = start[j].position;
                 }
             }
-
             Chip chip = Instantiate(characters[index], position, Quaternion.identity);
             chip.transform.rotation = new Quaternion(0, 180, 0, 0);
             chip.transform.parent = Parent.transform;
@@ -137,6 +134,7 @@ public class Controller : MonoBehaviour
         coroutineAllowed = true;
         if (players[turn].IsBot()) StartCoroutine(StartTurn());
     }
+    #endif
 
     private void EnterGame()
     {
@@ -287,7 +285,6 @@ public class Controller : MonoBehaviour
             isChecking = true;
             if(isChecking)
             {
-
                 Color color = players[turn].GetColor();
                 int current = players[turn].GetChip().GetCurrentPosition();
                 Node node = board.NodeList()[current].GetComponent<Node>();
@@ -343,7 +340,6 @@ public class Controller : MonoBehaviour
                                 }
                             }
                             mainPanel.Damage(turn);
-                            //mainPanel.POPHP(turn, "-" + (index+1).ToString());
                             node.RemoveToken(index);
                             if(node.IsEmpty())
                             {
@@ -352,7 +348,6 @@ public class Controller : MonoBehaviour
                         }
                     }
                 }
-
                 if(chip.IsDead())
                 {
                     players[turn].SetDeadFlag(true);
@@ -361,9 +356,7 @@ public class Controller : MonoBehaviour
                     chip.Destory();
                     audioList.DeadSound.Play();
                 }
-
                 isChecking = false;
-
             }
         }
         yield return new WaitUntil(() => isChecking == false);

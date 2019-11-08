@@ -21,7 +21,8 @@ public class SavePrefab : MonoBehaviour
         AssetDatabase.DeleteAsset(prefabPath);
 
         // Save the transform's GameObject as a prefab asset.
-        PrefabUtility.CreatePrefab(prefabPath, saveObject);
+        PrefabUtility.SaveAsPrefabAsset(saveObject, prefabPath);
+
 #endif
     }
 }

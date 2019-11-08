@@ -11,8 +11,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private DiceRoll diceRoll = default;
     [SerializeField]
-    private MainPanel mainPanel = default;
-    [SerializeField]
     private Music music = default;
     [SerializeField]
     private GameObject choosPlayerPanel = default;
@@ -29,7 +27,6 @@ public class UIManager : MonoBehaviour
         choosePlayers.Initialzation();
         endgame.Initialzation();
         diceRoll.Initialzation();
-        mainPanel.Initialzation();
         music.Initialzation();
     }
 
