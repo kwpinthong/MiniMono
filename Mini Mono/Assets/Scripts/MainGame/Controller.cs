@@ -200,7 +200,7 @@ public class Controller : MonoBehaviour
             }
 
             int index = 0;
-            for (int j = 1; j < start.Length; j++)
+            for (int j = 0; j < start.Length; j++)
             {
                 if (start[j].name == NameofColor(color))
                 {
@@ -225,7 +225,7 @@ public class Controller : MonoBehaviour
             }
 
             Chip chip = Instantiate(characters[index], position, Quaternion.identity);
-            chip.transform.rotation = new Quaternion(0, 180, 0, 1); // For old Chip ==> chip.SetColor(color);
+            chip.transform.rotation = new Quaternion(0, 180, 0, 1);
             chip.transform.parent = Parent.transform;
 
             if (isPlayer)
@@ -248,10 +248,8 @@ public class Controller : MonoBehaviour
     private void Delete()
     {
         if(Parent.transform.childCount != 0)
-        {
             foreach(Transform child in Parent.transform)
                 Destroy(child.gameObject);
-        }
     }
 
     private bool HaveSameColor(Color c)
@@ -278,7 +276,6 @@ public class Controller : MonoBehaviour
 
             Chip chip = players[turn].GetChip();
 
-            //Chip moving, and must done moving before do checking.
             chip.Moving(roll); yield return new WaitUntil(() => chip.IsMoving() == false);
 
             //Start Checking
