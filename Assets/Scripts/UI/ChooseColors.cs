@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChooseColors : MonoBehaviour
+public sealed class ChooseColors : Panel
 {
     [SerializeField]
     private AudioList audioList = default;
@@ -18,34 +18,39 @@ public class ChooseColors : MonoBehaviour
     [SerializeField]
     private GameObject popup = default;
     [SerializeField]
-    private GameObject choosePlayers = default;
-    [SerializeField]
-    private GameObject chooseColors = default;
-    [SerializeField]
-    private ChoosePlayers m_choosePlayers = default;
-
-    private int count;
     private List<PlayerConfig> playerConfigs;
 
-    public void Initialzation()
+    private int count;
+    
+    public override void Initialize()
     {
-        count = 0;
-        playerConfigs = new List<PlayerConfig>();
         BackButton.onClick.AddListener(BackChoosePlayers);
         startButton.onClick.AddListener(StartGame);
     }
-
-    private void Update()
+    
+    private void OnEnable()
     {
-        playerConfigs = m_choosePlayers.GetPlayerConfigs();
+        count = 0;
+        UpdateUI();
+    }
+    
+    private void UpdateUI()
+    {
+        var number = UI.ChoosePlayers.GetNumber();
+        for (int i = 0; i < playerConfigs.Count; i++)
+        {
+            playerConfigs[i].SetIamBotPanelActive(i >= number);
+            playerConfigs[i].SetColor(i);
+        }
     }
 
     private void BackChoosePlayers()
     {
         audioList.click8bit.Play();
         foreach (PlayerConfig config in playerConfigs)
-            config.ClosePanel(true);
-        choosePlayers.SetActive(true);
+            config.SetIamBotPanelActive(true);
+        UI.ChoosePlayers.Open();
+        UI.ChooseColors.Close();
     }
 
     private void StartGame()
@@ -53,13 +58,17 @@ public class ChooseColors : MonoBehaviour
         StopAllCoroutines();
         count++;
         if (count > 7)
+        {
+            // a little bit of humor, when player tries to
+            // click next button more than 7 times
             popupText.text = "Damn you!, Change it!";
-
+        }
         controller.UI_EnterGame();
         if (controller.IsDoneSetting())
         {
             audioList.gameStart.Play();
-            chooseColors.SetActive(false);
+            UI.ChoosePlayers.Close();
+            UI.ChooseColors.Close();
         }
         else
         {

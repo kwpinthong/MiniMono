@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Music : MonoBehaviour
@@ -32,6 +30,5 @@ public class Music : MonoBehaviour
             audioList.mainBG.mute = false;
             music.sprite = images[1].sprite;
         }
-
     }
 }

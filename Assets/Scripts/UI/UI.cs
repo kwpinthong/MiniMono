@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
+    private static UI instance;
+    
+    public static ChooseColors ChooseColors => instance.chooseColors;
+    public static ChoosePlayers ChoosePlayers => instance.choosePlayers;
+    
     [SerializeField]
     private ChooseColors chooseColors = default;
     [SerializeField]
@@ -14,17 +19,15 @@ public class UI : MonoBehaviour
     private MainPanel mainPanel = default;
     [SerializeField]
     private Music music = default;
-
-
+    
     private void Awake()
     {
-        chooseColors.Initialzation();
-        choosePlayers.Initialzation();
+        instance = this;
+        chooseColors.Initialize();
+        choosePlayers.Initialize();
         endgame.Initialzation();
         diceRoll.Initialzation();
         mainPanel.Initialzation();
         music.Initialzation();
     }
-
-
 }

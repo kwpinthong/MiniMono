@@ -2,8 +2,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChoosePlayers : MonoBehaviour
+public sealed class ChoosePlayers : Panel
 {
+    private const int DefaultChoosePlayers = 1;
+    private const int MaxChoosePlayers = 4;
+    
     [SerializeField]
     private AudioList audioList = default;
     [SerializeField]
@@ -15,53 +18,49 @@ public class ChoosePlayers : MonoBehaviour
     [SerializeField]
     private Text numberPlayer = default;
     [SerializeField]
-    private GameObject choosePlayers = default;
-
-    private int number;
     private List<PlayerConfig> playerConfigs;
 
-    public void Initialzation()
+    private int number;
+
+    public override void Initialize()
     {
-        number = 2;
-        playerConfigs = new List<PlayerConfig>();
         increaseButton.onClick.AddListener(Increase);
         decreaseButton.onClick.AddListener(Decrease);
         nextButton.onClick.AddListener(NextChooseColors);
+        number = DefaultChoosePlayers;
+        UpdateNumberPlayerText();
+    }
+
+    protected override void PreOpen()
+    {
+        base.PreOpen();
+        UpdateNumberPlayerText();
     }
 
     private void Increase()
     {
         audioList.clickSound.Play();
-        if (number >= 4) number = 2;
-        else number++;
+        number = number >= MaxChoosePlayers ? DefaultChoosePlayers : number + 1;
+        UpdateNumberPlayerText();
     }
 
     private void Decrease()
     {
         audioList.clickSound.Play();
-        if (number <= 2) number = 4;
-        else number--;
+        number = number <= DefaultChoosePlayers ? MaxChoosePlayers : number - 1;
+        UpdateNumberPlayerText();
     }
 
     private void NextChooseColors()
     {
         audioList.click8bit.Play();
-        playerConfigs.Clear();
-        for (int i = 0; i < number; i++)
-        {
-            string name = "PlayerConfig " + (i + 1).ToString();
-            if (GameObject.Find(name))
-            {
-                playerConfigs.Add(GameObject.Find(name).GetComponent<PlayerConfig>());
-                playerConfigs[i].ClosePanel(false);
-            }
-        }
-        choosePlayers.SetActive(false);
+        UI.ChooseColors.Open();
+        UI.ChoosePlayers.Close();
     }
-
-    private void Update()
+    
+    private void UpdateNumberPlayerText()
     {
-        numberPlayer.text = number.ToString();
+        numberPlayer.text = $"{number}";
     }
 
     public int GetNumber() => number ;

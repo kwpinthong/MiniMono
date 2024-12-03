@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 public sealed class NodeCorner : Node
 {
     private void Start()
