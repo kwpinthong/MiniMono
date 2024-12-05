@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using StarterKit.AudioManagerLib;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class DiceRoll : MonoBehaviour
@@ -9,8 +10,6 @@ public class DiceRoll : MonoBehaviour
     private Button rollButton = default;
     [SerializeField]
     private Controller controller = default;
-    [SerializeField]
-    private AudioList audioList = default;
     [SerializeField]
     private Image[] diceSides;
 
@@ -37,6 +36,6 @@ public class DiceRoll : MonoBehaviour
     private void RollDice()
     {
         controller.UI_RollDice();
-        audioList.rollSound.Play();
+        AudioManager.PlaySound("RollSound");
     }
 }

@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb4289e05852b545a8c16c0d9a7a9fa, type: 3}
+  m_Name: AudioBank
+  m_EditorClassIdentifier: 
+  audioDatas:
+  - Id: AddHP
+    PlayVoume: 1
+    AudioClips:
+    - {fileID: 8300000, guid: 27a60b5d07863794eb3acffb5e2b424d, type: 3}
+  - Id: Click8bit
+    PlayVoume: 0.8
+    AudioClips:
+    - {fileID: 8300000, guid: a391daceb16c8bc418102fa397694328, type: 3}
+  - Id: ClickSound
+    PlayVoume: 0.8
+    AudioClips:
+    - {fileID: 8300000, guid: 4efe29d3a7b96674696f9eecd8951c01, type: 3}
+  - Id: Dead
+    PlayVoume: 0.8
+    AudioClips:
+    - {fileID: 8300000, guid: 125456a04032f7d44a75c779078ca90b, type: 3}
+  - Id: GameStart
+    PlayVoume: 0.8
+    AudioClips:
+    - {fileID: 8300000, guid: 559e797d31b8e02458aaceff9a1d7b72, type: 3}
+  - Id: MainBGM
+    PlayVoume: 1
+    AudioClips:
+    - {fileID: 8300000, guid: eb50ae4393eff6045bce387e13552be5, type: 3}
+  - Id: RemoveHP
+    PlayVoume: 0.8
+    AudioClips:
+    - {fileID: 8300000, guid: 18b599c74d604fc439a08d9e33bd3f76, type: 3}
+  - Id: RollSound
+    PlayVoume: 0.8
+    AudioClips:
+    - {fileID: 8300000, guid: 3fe30e583919ae7458c8e30793a0f833, type: 3}
+  - Id: WalkSound
+    PlayVoume: 0.8
+    AudioClips:
+    - {fileID: 8300000, guid: a5bf4960e7c524142896be114ca100b8, type: 3}

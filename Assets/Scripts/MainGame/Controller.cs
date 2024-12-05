@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using StarterKit.AudioManagerLib;
 using UnityEngine;
 
 public class Controller : MonoBehaviour
@@ -8,8 +9,6 @@ public class Controller : MonoBehaviour
     private ChoosePlayers choosePlayers = default;
     [SerializeField]
     private MainPanel mainPanel = default;
-    [SerializeField]
-    private AudioList audioList = default;
     [SerializeField]
     private Board board = default;
     [SerializeField]
@@ -225,7 +224,7 @@ public class Controller : MonoBehaviour
                         chip.AddHP(1);
                         mainPanel.POPHP(turn, "+1");
                     }
-                    audioList.addHPSound.Play();
+                    AudioManager.PlaySound("AddHP");
                 }
                 else
                 {
@@ -241,7 +240,7 @@ public class Controller : MonoBehaviour
                             {
                                 chip.AddHP(1);
                                 mainPanel.POPHP(turn, "+1");
-                                audioList.addHPSound.Play();
+                                AudioManager.PlaySound("AddHP");
                             }
                             else
                             {
@@ -259,7 +258,7 @@ public class Controller : MonoBehaviour
                                     {
                                         chip.RemoveHP(1);
                                         index = i;
-                                        audioList.removeHPSound.Play();
+                                        AudioManager.PlaySound("RemoveHP");
                                     }
                                 }
                             }
@@ -279,7 +278,7 @@ public class Controller : MonoBehaviour
                     mainPanel.DeadPanel(turn);
                     chip.ClearToken(color, board);
                     chip.Destory();
-                    audioList.DeadSound.Play();
+                    AudioManager.PlaySound("Dead");
                 }
 
                 isChecking = false;

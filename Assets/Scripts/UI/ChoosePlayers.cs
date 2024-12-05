@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using StarterKit.AudioManagerLib;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,8 +8,6 @@ public sealed class ChoosePlayers : Panel
     private const int DefaultChoosePlayers = 1;
     private const int MaxChoosePlayers = 4;
     
-    [SerializeField]
-    private AudioList audioList = default;
     [SerializeField]
     private Button increaseButton = default;
     [SerializeField]
@@ -39,21 +38,21 @@ public sealed class ChoosePlayers : Panel
 
     private void Increase()
     {
-        audioList.clickSound.Play();
+        AudioManager.PlaySound("ClickSound");
         number = number >= MaxChoosePlayers ? DefaultChoosePlayers : number + 1;
         UpdateNumberPlayerText();
     }
 
     private void Decrease()
     {
-        audioList.clickSound.Play();
+        AudioManager.PlaySound("ClickSound");
         number = number <= DefaultChoosePlayers ? MaxChoosePlayers : number - 1;
         UpdateNumberPlayerText();
     }
 
     private void NextChooseColors()
     {
-        audioList.click8bit.Play();
+        AudioManager.PlaySound("Click8bit");
         UI.ChooseColors.Open();
         UI.ChoosePlayers.Close();
     }

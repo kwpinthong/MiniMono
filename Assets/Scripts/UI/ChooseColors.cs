@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using StarterKit.AudioManagerLib;
 using UnityEngine;
 using UnityEngine.UI;
 
 public sealed class ChooseColors : Panel
 {
-    [SerializeField]
-    private AudioList audioList = default;
     [SerializeField]
     private Controller controller = default;
     [SerializeField]
@@ -46,7 +45,7 @@ public sealed class ChooseColors : Panel
 
     private void BackChoosePlayers()
     {
-        audioList.click8bit.Play();
+        AudioManager.PlaySound("Click8bit");
         foreach (PlayerConfig config in playerConfigs)
             config.SetIamBotPanelActive(true);
         UI.ChoosePlayers.Open();
@@ -66,14 +65,14 @@ public sealed class ChooseColors : Panel
         controller.UI_EnterGame();
         if (controller.IsDoneSetting())
         {
-            audioList.gameStart.Play();
+            AudioManager.PlaySound("GameStart");
             UI.ChoosePlayers.Close();
             UI.ChooseColors.Close();
         }
         else
         {
             StartCoroutine(PopError(1f));
-            audioList.errorSound.Play();
+            AudioManager.PlaySound("ErrorSound");
         }
     }
 

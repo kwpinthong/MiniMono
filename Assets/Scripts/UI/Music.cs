@@ -1,34 +1,35 @@
-﻿using UnityEngine;
+﻿using StarterKit.AudioManagerLib;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Music : MonoBehaviour
 {
     [SerializeField]
-    private AudioList audioList = default;
-    [SerializeField]
     private Image music = default;
     [SerializeField]
     private Button muteButton = default;
-    private Image[] images;
+    [SerializeField]
+    private Sprite muteMusic;
+    [SerializeField]
+    private Sprite unmuteMusic;
 
     public void Initialzation()
     {
-        images = music.GetComponentsInChildren<Image>();
         muteButton.onClick.AddListener(MuteMusic);
-        music.sprite = images[1].sprite;
+        music.sprite = unmuteMusic;
     }
 
     private void MuteMusic()
     {
-        if (audioList.mainBG.mute == false)
+        if (AudioManager.IsBGMMute)
         {
-            audioList.mainBG.mute = true;
-            music.sprite = images[2].sprite;
+            AudioManager.MuteBGM(false);
+            music.sprite = unmuteMusic;
         }
         else
         {
-            audioList.mainBG.mute = false;
-            music.sprite = images[1].sprite;
+            AudioManager.MuteBGM(true);
+            music.sprite = muteMusic;
         }
     }
 }

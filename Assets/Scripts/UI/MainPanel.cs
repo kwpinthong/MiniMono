@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using StarterKit.AudioManagerLib;
 using UnityEngine;
 
 public class MainPanel : MonoBehaviour
 {
-    [SerializeField]
-    private AudioList audioList = default;
     [SerializeField]
     private Controller controller = default;
     private List<PlayerInfo> playerInfos;
@@ -54,7 +53,7 @@ public class MainPanel : MonoBehaviour
     private IEnumerator PlayBG()
     {
         yield return new WaitForSeconds(1f);
-        audioList.mainBG.Play();
+        AudioManager.PlayBGM("MainBGM");
     }
 
     private void Update()

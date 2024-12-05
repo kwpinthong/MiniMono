@@ -23,6 +23,10 @@ public class UI : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
         chooseColors.Initialize();
         choosePlayers.Initialize();
         endgame.Initialzation();
